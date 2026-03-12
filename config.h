@@ -15,6 +15,7 @@ static const unsigned int systrayonleft = 0;    /* 0: systray in the right corne
 static const unsigned int systrayspacing = 5;   /* systray spacing */
 static const int systraypinningfailfirst = 0;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;        /* 0 means no systray */
+static const unsigned int systrayiconsize = 18; 
 static const int showbar            = 1;        /* 0 means no bar */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -106,10 +107,7 @@ static const char *menucmd[] = { "dmenu_run", NULL };
 static const char *rofi[] = { "/home/sum/.config/rofi/launchers/type-6/launcher.sh", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *guifm[]  = { "pcmanfm", NULL };
-static const char *brave[] = { "brave", NULL};
-static const char *librewolf[] = { "librewolf", NULL};
 static const char *vscode[] = { "code", NULL };
-static const char *telegram[] = { "Telegram", NULL };
 static const char *discord[] = { "discord", NULL };
 static const char *boxes[] = { "virt-manager", NULL };
 static const char *powermenu[] = {"powermenu.sh", NULL };
@@ -122,9 +120,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_o,       spawn,         {.v = vscode } },
 	{ MODKEY,                       XK_e,       spawn,         {.v = guifm } },
-	{ MODKEY,                       XK_w,       spawn,         {.v = brave } },
-	{ MODKEY|ShiftMask,             XK_w,       spawn,         {.v = librewolf } },
-	{ MODKEY,                       XK_t,       spawn,         {.v = telegram } },
+	{ MODKEY,                       XK_w,       spawn,         SHCMD("brave") },
+	{ MODKEY|ShiftMask,             XK_w,       spawn,         SHCMD("smartgpu librewolf") },
+	{ MODKEY,                       XK_t,       spawn,         SHCMD("smartgpu Telegram")},
 	{ MODKEY|ShiftMask,             XK_d,       spawn,         {.v = discord } },
 	{ MODKEY|ShiftMask,             XK_b,       spawn,         {.v = boxes } },
 	{ MODKEY,                       XK_n,       spawn,         SHCMD("st -e nmtui-connect") },
@@ -193,6 +191,11 @@ static const Key keys[] = {
        /*{ MODKEY|ShiftMask, XK_p, spawn, SHCMD("maim -s | xclip -selection clipboard -t ~/pix/ss/screen_$(date +%F_%H-%M-%S).png && notify-send '📸 Screenshot copied to clipboard'") },*/
 
        { MODKEY|ShiftMask,   XK_p,     spawn, SHCMD("flameshot gui") },
+
+       //Monitor management
+       { ALTKEY|ShiftMask,   XK_1,     spawn, SHCMD("xrandr --output eDP-1 --off") },
+       { ALTKEY|ControlMask, XK_1,     spawn, SHCMD("xrandr --output HDMI-1 --off --output eDP-1 --auto") },
+       { ALTKEY|ShiftMask,   XK_0,     spawn, SHCMD("xrandr --output HDMI-1 --mode 1920x1080 --rate 100 --left-of eDP-1 --output eDP-1") },
 
 };
 
